@@ -1,1 +1,1 @@
-# Predicting-liver-disease-by-using-machine-learning-models
+# Predicting_liver_disease_by_using_machine_learning_models
