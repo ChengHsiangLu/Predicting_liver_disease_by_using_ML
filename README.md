@@ -28,6 +28,8 @@ First, I checked my dataset to see if there are missing values. Unfortunately, A
 
 From histograms and my description table, I can see that histograms of Age, T_P, ALB, and AG_Ratio look like a normal distribution. So, we can replace their missing values with means. On the other hand, histograms of T_B, D_B, ALP, GPT, GOT look like a skewed distribution. Thus, we can replace their missing value with medians.
 
+![](/Picture/Histogram_mean_median.png?raw=true)
+
 After that, only the gender feature contain missing values. However, I cannot replace them with mean or median because gender is a categorical data. But, based on these missing values of Gender are less than 3% of all data points, I just remove them.
 
 ## Imbalanced dataset
