@@ -64,7 +64,7 @@ First, a pairplot allows us to see both distribution of single variables and rel
 
 In this heatmap, a greater correlation shows a darker color and a higher score. There are four areas in blue squares show strong correlations. The feature of T_B and D_B, GPT and GOT, T_P and ALB, the last one is ALB and  AG_Ratio. In the end, I'm going to remove three features: T_B, GPT, and ALB.
 
-## Dropping unnecessary features
+## Drop unnecessary features
 
 After dropping these unnecessary features, there are less obvious linear patterns in the pairplot. The heatmap shows no strong correlation between each feature as well. Initially, I have 10 features. After checking their correlations, I decide to move on with these 7 features which are Age, Gender, D_B, ALP, GOT, T_P, and AG_Ratio. Next, I’m going to build my model.
 
