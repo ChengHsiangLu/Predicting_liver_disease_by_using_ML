@@ -146,7 +146,7 @@ After using cross validation, I evaluate the performance of my model. The accura
 
 The next thing I would like to do is to rank my features and see which one is more important. I use random forest to rank my features. The reason why I want to do that is to see if some features are not that important, then I can remove them and improve my accuracy. We can see that ALP, GOT, D__B, T_P, and AG_Ratio are the top five important features in my dataset. On the other hand, Age and Gender are not that essential. Thus, I decide to remove these two features.
 
-## Removing age and gender
+## Remove age and gender
 
 After removing the feature age and gender, the cross validation average Accuracy slightly increases to 91% and the accuracy of test dataset is still around 90%. Last, the accuracy of training dataset slightly increases to 94%. So, by removing age and gender, my training dataset accuracy is improved. Then, I’m going to use this model to predict new data which is obtain from my former co-work who currently work in the hospital.
 
