@@ -24,6 +24,8 @@ The goal for this project is to predict liver disease by using these data points
 
 First, I checked my dataset to see if there are missing values. Unfortunately, All features contain missing values. Then, I decided whether I should remove them. I tried to remove all of them, but 12% of my dataset would disappear. Therefore, I change to replace all missing values with means or median.
 
+![](/Pictures/Missing_values.png?raw=true)
+
 ## Mean or median
 
 From histograms and my description table, I can see that histograms of Age, T_P, ALB, and AG_Ratio look like a normal distribution. So, we can replace their missing values with means. On the other hand, histograms of T_B, D_B, ALP, GPT, GOT look like a skewed distribution. Thus, we can replace their missing value with medians.
@@ -32,9 +34,13 @@ From histograms and my description table, I can see that histograms of Age, T_P,
 
 After that, only the gender feature contain missing values. However, I cannot replace them with mean or median because gender is a categorical data. But, based on these missing values of Gender are less than 3% of all data points, I just remove them.
 
+![](/Pictures/Missing_values_gender.png?raw=true)
+
 ## Imbalanced dataset
 
 I take a closer look at my dataset’s target distribution and find out that my dataset is imbalanced. It shows that more than 21 thousand data points have liver disease, but only 8 thousand data points with no liver disease. There is a gap between two groups. The gap could cause inaccuracy for my further analysis. As the result, I decide to reduce the data points in liver disease group to match the number in no liver disease group.
+
+![](/Pictures/Imbalanced_dataset.png?raw=true)
 
 ## Data split and merge
 
@@ -54,6 +60,10 @@ And I recheck their distributions which look similar to the former ones.
 
 There are about 8,000 data points within each group now.
 
+![](/Pictures/Balanced_dataset.png?raw=true)
+
+![](/Pictures/Histogram_balanced_dataset.png?raw=true)
+
 ## Correlations
 
 Next thing I want to check correlations between features before I analyze my data. Maybe there are some redundant features that I would like to remove or essential features that I want to keep. In the end, It will improve the performance of my models.
@@ -62,13 +72,21 @@ Next thing I want to check correlations between features before I analyze my dat
 
 First, a pairplot allows us to see both distribution of single variables and relationships between two variables. Orange dots represent samples with no liver disease and blue dots represent samples with liver. From the pair plot, I can see the linear patterns between T_B and D_B. It suggest a presence of strong correlation between these two features. Therefore, I only have to pick one of the them when I go into further analysis.
 
+![](/Pictures/Pairplot_correlations.png?raw=true)
+
 ### Heatmap
 
 In this heatmap, a greater correlation shows a darker color and a higher score. There are four areas in blue squares show strong correlations. The feature of T_B and D_B, GPT and GOT, T_P and ALB, the last one is ALB and  AG_Ratio. In the end, I'm going to remove three features: T_B, GPT, and ALB.
 
+![](/Pictures/Heatmap_correlations.png?raw=true)
+
 ## Drop unnecessary features
 
-After dropping these unnecessary features, there are less obvious linear patterns in the pairplot. The heatmap shows no strong correlation between each feature as well. Initially, I have 10 features. After checking their correlations, I decide to move on with these 7 features which are Age, Gender, D_B, ALP, GOT, T_P, and AG_Ratio. Next, I’m going to build my model.
+After dropping these unnecessary features, there are less obvious linear patterns in the pairplot. The heatmap shows no strong correlation between each feature as well. Initially, I have 10 features. After checking their correlations, I decide to move on with these 7 features which are Age, Gender, D_B, ALP, GOT, T_P, and AG_Ratio.
+
+![](/Pictures/Pairplot_drop.png?raw=true)
+
+![](/Pictures/Heatmap_drop.png?raw=true)
 
 ## Training and test dataset
 
@@ -92,6 +110,10 @@ The lower left corner presents the false negative value. Like people with liver 
 
 To calculate the accuracy of the confusion matrix, there is a equation right here. First we add up TN and TP and then divided them by all four parts will get the accuracy score.
 
+![](/Pictures/Confusion_matrix.png?raw=true)
+
+![](/Pictures/Accuracy.png?raw=true)
+
 ## Models
 
 ### Logistic Regression with a single feature
@@ -100,9 +122,17 @@ The first model I used is Logistic Regression model. Logistic regression is a p
 
 The accuracy of test dataset is 66% and the training dataset accuracy is 67%. It is not the ideal score that I want because I only use one feature. Now, I’m going to use logistic regression with all feature in my dataset and build a more complicate model.
 
+![](/Pictures/Logistic_single_test.png?raw=true)
+
+![](/Pictures/Logistic_single_train.png?raw=true)
+
 ### Logistic Regression with all features
 
 When I use logistic regression with all features, the accuracy of test dataset increases from 66% to 71% and the training dataset accuracy also increases from 67% to 71%. However, it is still not the best score. Therefore, I’m going to find out the best model by comparing different models all together.
+
+![](/Pictures/Logistic_all_test.png?raw=true)
+
+![](/Pictures/Logistic_all_train.png?raw=true)
 
 ## Find best model
 
@@ -112,19 +142,27 @@ This time, I’ll compare logistic regression, decision tree, and Random forest.
 
 The decision tree is a supervised machine learning model. It is like a tree, branching from the root to the trunk to the leaves.  The part of each node is a feature. A step-by-step breakdown of features will yield outputs on whether patients have liver disease or not.
 
+![](/Pictures/Decision_tree.png?raw=true)
+
 ### Random forest
 
 Random forest is a supervised machine learning algorithm that is used widely in classification and regression problems. It builds decision trees on different samples and takes their majority vote for classification and average in case of regression. For example, in this figure, there are total 9 decision trees, 6 of them predict 1 and 3 of them predict 0. So, the most votes 1 becomes the model’s prediction.
 
+![](/Pictures/Random_forest.png?raw=true)
+
 ## Best model
 
 After checking with these three models, I found that the random forest model has the highest accuracy. Its accuracy is 88% which is higher than logistic regression and decision tree. I can also see that decision tree and random forest have a much higher score than the logistic regression. But, it’s known that with tree-based models, the score I get may be due to a so-called overfitting problem. I have to double check whether the relatively high score is due to the overfitting issue.
+
+![](/Pictures/Find_best_model.png?raw=true)
 
 ## Overfitting
 
 Overfitting is over-learning the training data, and it becomes hard to predict other data that is not in the training dataset. Any model perform too well on the training dataset but the performance drops significantly over the test dataset.
 
 As the model complexity increases, we can reduce the training error but simultaneously increases the test error.
+
+![](/Pictures/Overfitting.png?raw=true)
 
 ## Cross validation
 
@@ -140,21 +178,37 @@ The last step is to repeat the process for each subset of the dataset.
 
 In the end, my average of Accuracy is 88%.
 
+![](/Pictures/Cross_validation.png?raw=true)
+
 ## Model Evaluation
 
-After using cross validation, I evaluate the performance of my model. The accuracy of test dataset is 90% and the accuracy of training dataset is 91.8%. The higher score that I got from the training dataset is almost 4% higher than the Average Accuracy of cross validation
+After using cross validation, I evaluate the performance of my model. The accuracy of test dataset is 90% and the accuracy of training dataset is 91.8%. The higher score that I got from the training dataset is almost 4% higher than the Average Accuracy of cross validation.
+
+![](/Pictures/cm_rf_test.png?raw=true)
+
+![](/Pictures/cm_rf_train.png?raw=true)
 
 ## Feature importance
 
 The next thing I would like to do is to rank my features and see which one is more important. I use random forest to rank my features. The reason why I want to do that is to see if some features are not that important, then I can remove them and improve my accuracy. We can see that ALP, GOT, D__B, T_P, and AG_Ratio are the top five important features in my dataset. On the other hand, Age and Gender are not that essential. Thus, I decide to remove these two features.
 
+![](/Pictures/Feature_importance.png?raw=true)
+
 ## Remove age and gender
 
 After removing the feature age and gender, the cross validation average Accuracy slightly increases to 91% and the accuracy of test dataset is still around 90%. Last, the accuracy of training dataset slightly increases to 94%. So, by removing age and gender, my training dataset accuracy is improved. Then, I’m going to use this model to predict new data which is obtain from my former co-work who currently work in the hospital.
 
+![](/Pictures/Feature_importance_remove.png?raw=true)
+
+![](/Pictures/cm_rf_remove_test.png?raw=true)
+
+![](/Pictures/cm_rf_remove_train.png?raw=true)
+
 ## Make predictions
 
 The first two samples’ blood tests are obtained from my co-workers themselves who are both healthy and the last two samples’ blood tests are gained from people with slightly abnormal liver function, but they still consider healthy. However, all results show that they might have liver disease.
+
+![](/Pictures/Predictions.png?raw=true)
 
 ## Possible reasons
 
@@ -173,10 +227,13 @@ If you have duplicates in your training and test datasets, it’s expected
 
 After removing Age and Gender, within different groups, all features are showed exact the same. It might cause the model keep learning from the same training data and increasing the weight. It also inflated the score of test dataset accuracy due to these duplicates. However, the model have not encountered any new data with different values. In the end, it predict incorrectly.
 
+![](/Pictures/Duplicates.png?raw=true)
 
 ## Normal range
 
 From my personal point of view, There is another possible reason which is the different normal range of each feature. For example, the figure below is the description of non-liver disease group. The most important feature in my dataset is ALP. However, the mean of ALP is 219 and the median of ALP is 188 while the actual normal range in reality is 44-147. So as the third important feature D_B. Its mean is 0.39 while the actual normal range in reality is below 0.3. Therefore, it may cause an issue when comparing with true normal range.
+
+![](/Pictures/Normal_range.png?raw=true)
 
 ## Future direction
 
